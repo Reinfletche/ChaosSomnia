@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Bullet
   - Enemigo
+  - Usable
   layers:
   - Default
   - TransparentFX

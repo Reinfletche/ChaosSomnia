@@ -14,6 +14,7 @@ public class Jugador : MonoBehaviour
     private void Update()
     {
         RotacionArmas();
+        Update_Objetos();
     }
 
     #endregion CORE
@@ -82,6 +83,41 @@ public class Jugador : MonoBehaviour
 
     #endregion Armas
 
+    #region Objetos
+    private Usable usable;
+
+    private void Update_Objetos()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (usable)
+                usable.Usar(this);
+        }
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        switch (other.tag)
+        {
+            case "Usable":
+                usable = other.GetComponent<Usable>();
+                usable.Activo = true;
+                break;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        switch (other.tag)
+        {
+            case "Usable":
+                usable.Activo = false;
+                usable = null;
+                break;
+        }
+    }
+
+    #endregion
 
 }
 

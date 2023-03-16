@@ -48,6 +48,9 @@ public class Arma : MonoBehaviour
                     }
                 }
                 break;
+            
+            case TipoArma.escopeta:
+                break;
         }
     }
 
