@@ -13,7 +13,7 @@ public class Jugador : MonoBehaviour
 
     private void Update()
     {
-        RotacionArmas();
+        Update_Armas();
         Update_Objetos();
     }
 
@@ -47,8 +47,13 @@ public class Jugador : MonoBehaviour
     private int indiceArma = 0;
     private Arma _arma = null;
     
-    private void RotacionArmas()
+    private void Update_Armas()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Arma.Disparar();
+        }
+        
         int scroll = (int) Input.mouseScrollDelta.y;
         
         if (scroll != 0)
@@ -78,9 +83,22 @@ public class Jugador : MonoBehaviour
                 else
                     arma.gameObject.SetActive(false);
             }
+
+            HUD.IconoBala = _arma.iconoBala;
+            HUD.TextoBalas = _arma.Balas + "/" + _arma.BalasReserva;
         }
     }
 
+    public Arma ObtenerArma(TipoArma tipoArma)
+    {
+        switch (tipoArma)
+        {
+            case TipoArma.pistola: return armas[0];
+            case TipoArma.escopeta: return armas[1];
+            case TipoArma.rifle: return armas[2];
+            default: return null;
+        }
+    }
     #endregion Armas
 
     #region Objetos

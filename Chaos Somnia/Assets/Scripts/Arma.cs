@@ -15,11 +15,12 @@ public class Arma : MonoBehaviour
     
     public Sprite iconoBala;
     public int damage;
-    public int cadencia;
+    public float cadencia;
     
-    private int balasMax;
+    private int _balasReserva;
+    [SerializeField] private int balasReservaMax;
     public int balasCargador;
-    private int _balas;
+    private int _balas = 10;
     
     public float tiempoRecarga;
     public float fuerzaEmpuje;
@@ -28,8 +29,12 @@ public class Arma : MonoBehaviour
     
     public void Disparar()
     {
+        if (!PuedeDisparar)
+            return;
+        
         StartCoroutine(TimerCadencia());
-
+        Balas--;
+        
         switch (tipoArma)
         {
             case TipoArma.pistola or TipoArma.rifle:
@@ -77,7 +82,31 @@ public class Arma : MonoBehaviour
             return true;
         }
     }
-    
+
+    public int Balas
+    {
+        get => _balas;
+        set
+        {
+            _balas = value;
+            HUD.TextoBalas = _balas + "/" + _balasReserva;
+        }
+    }
+
+    public int BalasReserva
+    {
+        get => _balasReserva;
+        set
+        {
+            if (value > balasReservaMax)
+                _balasReserva = balasReservaMax;
+            else
+                _balasReserva = value;
+
+            if (gameObject.activeSelf)
+                HUD.TextoBalas = Balas + "/" + BalasReserva;
+        }
+    }
 }
 
 public enum TipoArma

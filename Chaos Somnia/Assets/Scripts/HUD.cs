@@ -12,6 +12,10 @@ public class HUD : MonoBehaviour
     [SerializeField] private Image barraVida;
     [SerializeField] private TMP_Text textoVida;
 
+    [Header("Balas")] 
+    [SerializeField] private Image iconoBala;
+    [SerializeField] private TMP_Text textoBalas;
+    
     private void Awake()
     {
         self = this;
@@ -28,6 +32,16 @@ public class HUD : MonoBehaviour
     public static string TextoVida
     {
         set => self.textoVida.text = value;
+    }
+
+    public static Sprite IconoBala
+    {
+        set => self.iconoBala.sprite = value;
+    }
+    
+    public static string TextoBalas
+    {
+        set => self.textoBalas.text = value;
     }
     
 }
