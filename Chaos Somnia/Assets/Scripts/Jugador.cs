@@ -9,6 +9,7 @@ public class Jugador : MonoBehaviour
     private void Start()
     {
         Vida = vidaMaxima;
+        InicializarArmas();
     }
 
     private void Update()
@@ -44,11 +45,19 @@ public class Jugador : MonoBehaviour
     #region Armas
 
     [SerializeField] private Arma[] armas;
-    private int indiceArma = 0;
+    private int indiceArma = -1;
     private Arma _arma = null;
+
+    private void InicializarArmas()
+    {
+        Arma = null;
+    }
     
     private void Update_Armas()
     {
+        if(indiceArma == -1)
+            return;
+        
         if (Input.GetMouseButtonDown(0))
         {
             Arma.Disparar();
@@ -58,14 +67,23 @@ public class Jugador : MonoBehaviour
         
         if (scroll != 0)
         {
-            indiceArma += scroll;
+            int indice = indiceArma + scroll;
 
-            if (indiceArma < 0) //-1
-                indiceArma = 2;
-            else if (indiceArma > armas.Length-1) //3
-                indiceArma = 0;
+            CicloArmas:
+            if (indice < 0) //-1
+                indice = 2;
+            else if (indice > 2) //3
+                indice = 0;
 
-            Arma = armas[indiceArma];
+            Arma armaTemp = armas[indice];
+
+            if (armaTemp.bloqueada)
+            {
+                indice++;
+                goto CicloArmas;
+            }
+
+            Arma = armaTemp;
         }
     }
 
@@ -84,8 +102,16 @@ public class Jugador : MonoBehaviour
                     arma.gameObject.SetActive(false);
             }
 
-            HUD.IconoBala = _arma.iconoBala;
-            HUD.TextoBalas = _arma.Balas + "/" + _arma.BalasReserva;
+            if (_arma)
+            {
+                HUD.IconoBala = _arma.iconoBala;
+                HUD.TextoBalas = _arma.Balas + "/" + _arma.BalasReserva;
+            }
+            else
+            {
+                HUD.IconoBala = Resources.Load<Sprite>("municionVacia");
+                HUD.TextoBalas = string.Empty;
+            }
         }
     }
 
@@ -99,8 +125,20 @@ public class Jugador : MonoBehaviour
             default: return null;
         }
     }
+
+    public void DesbloquearArma(TipoArma tipoArma)
+    {
+        ObtenerArma(tipoArma).bloqueada = false;
+
+        if (indiceArma == -1)
+        {
+            Arma = ObtenerArma(tipoArma);
+        }
+    }
     #endregion Armas
 
+    
+    
     #region Objetos
     private Usable usable;
 
