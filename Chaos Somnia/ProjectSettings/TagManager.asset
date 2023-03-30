@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - Enemigo
   - Usable
+  - Patrulla
   layers:
   - Default
   - TransparentFX
