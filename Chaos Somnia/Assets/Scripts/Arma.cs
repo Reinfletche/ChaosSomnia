@@ -19,7 +19,7 @@ public class Arma : MonoBehaviour
     
     private int _balasReserva;
     [SerializeField] private int balasReservaMax;
-    public int balasCargador;
+    public int balasCargador = 0;
     private int _balas = 10;
     
     public float tiempoRecarga;
@@ -36,6 +36,8 @@ public class Arma : MonoBehaviour
 
     public void Disparar()
     {
+        print(PuedeDisparar);
+        
         if (!PuedeDisparar)
             return;
         
@@ -66,6 +68,7 @@ public class Arma : MonoBehaviour
                 break;
         }
         
+        print("Disparar");
         animator.SetTrigger("shoot");
     }
 
@@ -83,7 +86,7 @@ public class Arma : MonoBehaviour
             if (enTimerCadencia)
                 return false;
 
-            if (_balas <= 0)
+            if (balasCargador <= 0)
                 return false;
 
             if (recargando)
