@@ -26,15 +26,23 @@ public class Arma : MonoBehaviour
     public float fuerzaEmpuje;
 
     public Transform disparador;
-    
+
+    private Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     public void Disparar()
     {
         if (!PuedeDisparar)
             return;
         
         StartCoroutine(TimerCadencia());
-        Balas--;
         
+        Balas--;
+
         switch (tipoArma)
         {
             case TipoArma.pistola or TipoArma.rifle:
@@ -57,6 +65,8 @@ public class Arma : MonoBehaviour
             case TipoArma.escopeta:
                 break;
         }
+        
+        animator.SetTrigger("shoot");
     }
 
     public IEnumerator TimerCadencia()
