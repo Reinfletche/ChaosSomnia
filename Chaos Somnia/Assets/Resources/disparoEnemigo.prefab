@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3160935581594017644}
   - component: {fileID: 7723203077319301672}
   m_Layer: 0
-  m_Name: EnemyHit
+  m_Name: disparoEnemigo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

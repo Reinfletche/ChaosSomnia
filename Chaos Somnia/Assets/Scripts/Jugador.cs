@@ -93,7 +93,7 @@ public class Jugador : MonoBehaviour
         set
         {
             _arma = value;
-
+            
             foreach (Arma arma in armas)
             {
                 if (arma == _arma)
@@ -104,6 +104,8 @@ public class Jugador : MonoBehaviour
 
             if (_arma)
             {
+                indiceArma = IndiceArma(Arma.tipoArma);
+                
                 HUD.IconoBala = _arma.iconoBala;
                 HUD.TextoBalas = _arma.Balas + "/" + _arma.BalasReserva;
             }
@@ -123,6 +125,18 @@ public class Jugador : MonoBehaviour
             case TipoArma.escopeta: return armas[1];
             case TipoArma.rifle: return armas[2];
             default: return null;
+        }
+        
+    }
+
+    public int IndiceArma(TipoArma tipoArma)
+    {
+        switch (tipoArma)
+        {
+            case TipoArma.pistola: return 0;
+            case TipoArma.escopeta: return 1;
+            case TipoArma.rifle: return 2;
+            default: return -1;
         }
     }
 

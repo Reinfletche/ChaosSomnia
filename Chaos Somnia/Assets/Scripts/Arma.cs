@@ -25,13 +25,15 @@ public class Arma : MonoBehaviour
     public float tiempoRecarga;
     public float fuerzaEmpuje;
 
-    public Transform disparador;
-
+    private Transform disparador;
     private Animator animator;
-
+    private GameObject disparoEnemigoPf;
+    
     private void Awake()
     {
+        disparador = Camera.main.transform;
         animator = GetComponent<Animator>();
+        disparoEnemigoPf = Resources.Load<GameObject>("disparoEnemigo");
     }
 
     public void Disparar()
@@ -52,6 +54,8 @@ public class Arma : MonoBehaviour
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
                     Collider collider = hit.collider;
+                    disparoV3 = hit.point;
+                    print(hit.collider.name);
                     
                     if (collider.CompareTag("Enemigo"))
                     {
@@ -60,6 +64,9 @@ public class Arma : MonoBehaviour
 
                         Vector3 empuje = -enemigo.transform.forward * fuerzaEmpuje;
                         enemigo.Rb.AddForce(empuje,ForceMode.Impulse);
+
+                        GameObject disparoEnemigo = Instantiate(disparoEnemigoPf, hit.point, Quaternion.identity);
+                        Destroy(disparoEnemigo,2);
                     }
                 }
                 break;
@@ -70,6 +77,18 @@ public class Arma : MonoBehaviour
         
         print("Disparar");
         animator.SetTrigger("shoot");
+    }
+
+    private Vector3 disparoV3;
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(disparador.position,disparoV3);
+
+        Gizmos.color = Color.green;
+        Vector3 apuntado = new Ray(disparador.position, disparador.forward).GetPoint(50);
+        Gizmos.DrawLine(disparador.position,apuntado);
     }
 
     public IEnumerator TimerCadencia()
