@@ -56,8 +56,6 @@ MonoBehaviour:
   balasReservaMax: 80
   balasCargador: 20
   tiempoRecarga: 2
-  fuerzaEmpuje: 5
-  disparador: {fileID: 4932313256662456089}
 --- !u!33 &2002881749184256261
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -184,8 +182,6 @@ MonoBehaviour:
   balasReservaMax: 54
   balasCargador: 6
   tiempoRecarga: 6
-  fuerzaEmpuje: 10
-  disparador: {fileID: 4932313257194408860}
 --- !u!33 &1197296839818684155
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -270,7 +266,7 @@ GameObject:
   - component: {fileID: 4932313255628558632}
   - component: {fileID: 4932313255628558633}
   - component: {fileID: 4932313255628558634}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: JUGADOR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -986,8 +982,6 @@ MonoBehaviour:
   balasReservaMax: 18
   balasCargador: 4
   tiempoRecarga: 4
-  fuerzaEmpuje: 100
-  disparador: {fileID: 4932313257129865046}
 --- !u!33 &7961703530712131255
 MeshFilter:
   m_ObjectHideFlags: 0

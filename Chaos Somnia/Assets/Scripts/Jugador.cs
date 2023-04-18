@@ -5,7 +5,15 @@ using UnityEngine;
 
 public class Jugador : MonoBehaviour
 {
+
     #region CORE
+    private static Jugador self;
+
+    private void Awake()
+    {
+        self = this;
+    }
+
     private void Start()
     {
         Vida = vidaMaxima;
@@ -18,6 +26,8 @@ public class Jugador : MonoBehaviour
         Update_Objetos();
     }
 
+    public static Vector3 Posicion => self.transform.position;
+
     #endregion CORE
 
     
@@ -26,17 +36,18 @@ public class Jugador : MonoBehaviour
     
     #region Stats
     [Header("Stats")]
+
     public int vidaMaxima = 100;
     private int _vida;
     
-    public int Vida
+    public static int Vida
     {
-        get => _vida;
+        get => self._vida;
         set
         {
-            _vida = value;
-            HUD.BarraVida = (float) _vida / vidaMaxima;
-            HUD.TextoVida = _vida + "/" + vidaMaxima;
+            self._vida = value;
+            HUD.BarraVida = (float)  self._vida /  self.vidaMaxima;
+            HUD.TextoVida =  self._vida + "/" +  self.vidaMaxima;
         }
     }
     #endregion

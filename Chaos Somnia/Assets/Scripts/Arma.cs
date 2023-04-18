@@ -23,7 +23,6 @@ public class Arma : MonoBehaviour
     private int _balas = 10;
     
     public float tiempoRecarga;
-    public float fuerzaEmpuje;
 
     private Transform disparador;
     private Animator animator;
@@ -61,9 +60,6 @@ public class Arma : MonoBehaviour
                     {
                         Enemigo enemigo = collider.GetComponent<Enemigo>();
                         enemigo.Vida -= damage;
-
-                        Vector3 empuje = -enemigo.transform.forward * fuerzaEmpuje;
-                        enemigo.Rb.AddForce(empuje,ForceMode.Impulse);
 
                         GameObject disparoEnemigo = Instantiate(disparoEnemigoPf, hit.point, Quaternion.identity);
                         Destroy(disparoEnemigo,2);
