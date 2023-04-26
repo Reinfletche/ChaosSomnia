@@ -8,6 +8,8 @@ public class Arma : MonoBehaviour
     [Header("Stats")] 
     public TipoArma tipoArma;
 
+    
+
     //Estados
     public bool bloqueada = true;
     private bool enTimerCadencia = false;
@@ -48,27 +50,54 @@ public class Arma : MonoBehaviour
 
         switch (tipoArma)
         {
-            case TipoArma.pistola or TipoArma.rifle:
-                Ray ray = new Ray(disparador.position, disparador.forward);
-                if (Physics.Raycast(ray, out RaycastHit hit))
+            case TipoArma.pistola:
                 {
-                    Collider collider = hit.collider;
-                    disparoV3 = hit.point;
-                    print(hit.collider.name);
-                    
-                    if (collider.CompareTag("Enemigo"))
-                    {
-                        Enemigo enemigo = collider.GetComponent<Enemigo>();
-                        enemigo.Vida -= damage;
 
-                        GameObject disparoEnemigo = Instantiate(disparoEnemigoPf, hit.point, Quaternion.identity);
-                        Destroy(disparoEnemigo,2);
+
+                    Ray ray = new Ray(disparador.position, disparador.forward);
+                    if (Physics.Raycast(ray, out RaycastHit hit))
+                    {
+                        Collider collider = hit.collider;
+                        disparoV3 = hit.point;
+                        print(hit.collider.name);
+
+                        if (collider.CompareTag("Enemigo"))
+                        {
+                            Enemigo enemigo = collider.GetComponent<Enemigo>();
+                            enemigo.Vida -= damage;
+
+                            GameObject disparoEnemigo = Instantiate(disparoEnemigoPf, hit.point, Quaternion.identity);
+                            Destroy(disparoEnemigo, 2);
+                        }
                     }
+                    break;
                 }
-                break;
-            
+
+
+
             case TipoArma.escopeta:
                 break;
+
+            case TipoArma.rifle:
+                {
+                    Ray ray = new Ray(disparador.position, disparador.forward);
+                    if (Physics.Raycast(ray, out RaycastHit hit))
+                    {
+                        Collider collider = hit.collider;
+                        disparoV3 = hit.point;
+                        print(hit.collider.name);
+
+                        if (collider.CompareTag("Enemigo"))
+                        {
+                            Enemigo enemigo = collider.GetComponent<Enemigo>();
+                            enemigo.Vida -= damage;
+
+                            GameObject disparoEnemigo = Instantiate(disparoEnemigoPf, hit.point, Quaternion.identity);
+                            Destroy(disparoEnemigo, 2);
+                        }
+                    }
+                    break;
+                }
         }
         
         print("Disparar");

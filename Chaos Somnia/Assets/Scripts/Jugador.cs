@@ -167,13 +167,21 @@ public class Jugador : MonoBehaviour
     #region Objetos
     private Usable usable;
 
+    private ChangeScene changescene;
+
     private void Update_Objetos()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (usable)
+            if (usable && !changescene)
                 usable.Usar(this);
+            else if (changescene && usable)
+            {
+                changescene.Interact();
+            }
         }
+
+
     }
     
     private void OnTriggerEnter(Collider other)
@@ -181,9 +189,18 @@ public class Jugador : MonoBehaviour
         switch (other.tag)
         {
             case "Usable":
-                usable = other.GetComponent<Usable>();
-                usable.Activo = true;
-                break;
+                {
+                    usable = other.GetComponent<Usable>();
+                    usable.Activo = true;
+                    break;
+                }
+            case "Interactable":
+                {
+                    usable = other.GetComponent<Usable>();
+                    changescene = other.GetComponent<ChangeScene>();
+                    usable.Activo = true;
+                    break;
+                }   
         }
     }
 
@@ -192,9 +209,20 @@ public class Jugador : MonoBehaviour
         switch (other.tag)
         {
             case "Usable":
-                usable.Activo = false;
-                usable = null;
-                break;
+                {
+                    usable.Activo = false;
+                    usable = null;
+                    break;
+                }
+
+            case "Interactable":
+                {
+                    usable.Activo = false; //Se usa unicamente para activar el canvas
+                    changescene = null;
+                    usable = null;
+                    break;
+                }
+                
         }
     }
 

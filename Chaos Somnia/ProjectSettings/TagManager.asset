@@ -10,6 +10,7 @@ TagManager:
   - Enemigo
   - Usable
   - Patrulla
+  - Interactable
   layers:
   - Default
   - TransparentFX
